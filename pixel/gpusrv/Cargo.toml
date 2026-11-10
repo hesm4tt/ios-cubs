@@ -1,0 +1,11 @@
+[package]
+name = "gpusrv"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+metal2vulkan = { path = "$HOME/m2v/crates/metal2vulkan" }
+metal2vulkan-runtime = { path = "$HOME/m2v/crates/metal2vulkan-runtime" }
+libc = "0.2"
+
+[workspace]

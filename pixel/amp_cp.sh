@@ -1,0 +1,20 @@
+CP=${CP:-9}
+rmmod google_ehld_coreinstr 2>/dev/null
+rmmod cubs_stage 2>/dev/null; rm -f /dev/cubs_stage /dev/cubs_go /dev/cubs_ram
+insmod /data/local/tmp/cubs_stage.ko; sleep 2
+cat /data/local/tmp/ho.payload > /dev/cubs_stage
+printf "P$CP" > /dev/cubs_go
+taskset 1 sh -c "echo S > /dev/cubs_go"
+printf "L0:2000000" > /dev/cubs_go
+echo C > /dev/cubs_go
+echo "--- before start"
+for o in 13b0000 1bf9208 1d189f8; do printf "H%s:4" $o > /dev/cubs_go; done
+echo 0 > /sys/devices/system/cpu/cpu6/online; sleep 1
+printf "N600:1" > /dev/cubs_go
+for i in 1 2 3 4; do
+  sleep 1
+  echo "--- t=$i s"
+  for o in 13b0000 1bf9208 1c00000; do printf "H%s:4" $o > /dev/cubs_go; done
+  echo V > /dev/cubs_go
+done
+dmesg | grep -a -E "^\[ *[0-9.]+\] (cubs_stage: (CPU_ON|amp)|H[|])" | tail -40 | cut -c1-150

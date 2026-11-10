@@ -1,0 +1,21 @@
+# build outputs and anything that comes from a device or from Apple/Google
+*.payload
+*.img
+*.apfs
+*.bin
+*.raw
+*.ko
+*.o
+*.dylib
+*.ipsw
+*.adt
+*.dtb
+*.dts
+*.pyc
+__pycache__/
+target/
+# local logs, screenshots and scratch
+*.log
+shots/
+fb*.png
+.DS_Store
